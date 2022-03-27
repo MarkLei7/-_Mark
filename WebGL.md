@@ -51,6 +51,11 @@ z-Buffer算法的缺点：
 
 
 #### 深度测试
+深度值存储在每个片段里面（作为片段的z值），
+当片段想要输出它的颜色时，将它的深度值和z缓冲进行比较，
+如果当前的片段在其它片段之后，它将会被丢弃，否则将会覆盖。
+这个过程称为深度测试(Depth Testing)
+
 #### 帧缓冲
 #### 几何: 怎么判断点在三角形内
 #### 实例化渲染
@@ -58,10 +63,28 @@ z-Buffer算法的缺点：
 #### 性能优化
 #### 不同相机模型
 #### 大量物体的渲染方法:合并
-#### 3d的graphic pipeline
 #### mv矩阵
 #### 灯光
 
+#### 3d的graphic pipeline
+Application CPU负责，把各种几何体信息输送到Geometry阶段，如点、线、三角形。
+    这个阶段是不需要细分子管线的，因为是在CPU处理
+    假设是单线程，那么并没有管线处理的能力
+    不过可以用多核多线程，来实现并行计算
+Geometry
+    model and view transform
+    vertex shading
+    projection
+    clipping
+    screen mapping
+Rasterizer 
+    triangle setup
+    triangle traversal 
+        fragment是指被光栅化阶段的三角形覆盖(全覆盖或部分覆盖）到的像素格子其中之一
+        找出每个三角形的fragments，就叫triangle traversal，或叫scan conversion
+    pixel shading
+    merging
+        depth test和stencil test发生在这个阶段
 #### MVP变换详解（物体从自身坐标系到屏幕渲染之间发生的矩阵转换）
 MVP变换：将我们已经构建好的各种3维模型映射到屏幕这个2维坐标中
 参与 MVP 变换的信息包括点、矢量、法线、切线等
