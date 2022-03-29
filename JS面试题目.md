@@ -1827,3 +1827,24 @@ Event.prototype.once=function(type,fn){
 }
 ```
 装饰者模式、观察者模式？
+
+##### 模拟可选链操作符 ?.
+```js
+function fn(obj={},keys=[]){
+    return keys.reduce((pre,cur)=>{
+        let ans=undefined
+        if(pre.hasOwnProperty(cur)){
+            ans=pre[cur]
+        }
+        return ans
+    },obj)  
+}
+
+const A={
+    a:{b:"AB"},
+    b:"B",
+    c:"C"
+}
+fn(A,["a","b","c"])
+
+```
