@@ -68,6 +68,21 @@ Symbol
 
 prototype和constructor属性
 一层层向上找，找到Object为止
+```js
+function User(){}
+const u1=new User()
+//u1._proto_->User.prototype
+console.log(u1._proto_===User.prototype) //true
+const u2=new User()
+console.log(u1._proto_===u2._proto_) //true
+
+Object._proto_===Function.prototype
+//Object.prototype是Object构造函数的原型，处于原型链的顶端
+Object.prototype.__proto__===null
+
+Function.__proto__ --> Function.prototype
+//Function函数不通过任何东西创建，JS引擎启动时，添加到内存中
+```
 
 ##### 事件循环机制
 主线程有个队列，这里面空了就会去事件队列读取回调函数，放回主线程执行，循环这个过程就是事件循环
@@ -76,6 +91,12 @@ prototype和constructor属性
 Promise定义部分为同步任务，回调部分为异步任务。Promise的优先级高于SetTimeout
 宏任务、微任务
 	他们有各自的任务队列
+
+代码开始执行会创建一个全局调用栈，script作为宏任务执行
+执行过程同步任务立即执行，异步任务根据类型分别注册到微任务队列和宏任务队列
+同步任务执行完毕后查看微任务队列
+如果存在微任务就把它们全部执行，包括微任务产生的新的微任务
+如果没有微任务，查看宏任务队列，执行完宏任务，再查看微任务队列
 
 ##### 作用域与作用域链
 除了函数内部和{}内部定义的变量，其余都属于全局作用域
