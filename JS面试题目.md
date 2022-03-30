@@ -694,7 +694,7 @@ function doPromiseAll(promises){
         if(!Array.isArray(promises)){
             throw new TypeError("promises must be an array")
         }
-        let result=[]
+        cosnt result=[]
         let count=0
         promises.forEach((promise,index)=>{
             Promise.resolve(promise).then((res)=>{
@@ -750,6 +750,12 @@ MyPromise.prototype.finally=function(callback){
         return this.then(
             value=>Promise.resolve(callback()).then(()=>value),
             reason=>Promise.resolve(callback()).then(()=>{throw reason})
+        )
+    }
+    function promiseFinally=(cb){
+        return this.then(
+            value=>Promise.resolve(cb()).then(()=>value),
+            reason=>Promise.resolve(cb()).then(()=>{throw reason})
         )
     }
 }
@@ -945,7 +951,7 @@ function debounce(func,wait=1000,immediate=true){
                 clearTimeout(timeout)
             }
             if(immediate){
-                    const CallNow=!=timeout
+                    const CallNow=!timeout
                     timeout=setTimeOut(function(){timeout=null},wait)
                     if(CallNow){
                         result=fn.apply(context,args)
@@ -964,6 +970,7 @@ function debounce(func,wait=1000,immediate=true){
         return debounced
     }
 }
+
 ```
 
 ##### 实现节流函数throttle
@@ -1043,6 +1050,28 @@ function throttle(func,wait,options={}){
             }
         }
     }
+    function throttle(fn,wait=500,options={}){
+        let timeout
+        let previous=0
+        return function(){
+            let now=+new Date()
+            let remain=wait-(now-previous)
+            if(remain<0){
+                previous=now
+                if(previous==0&&!option.begin){
+                    return
+                }
+                if(timeout){
+                    clearTimeOut(timeout)
+                    timeout=null
+                }
+                fn.call(this,arguments)
+            }else if(!timeout&&options.end){
+                timeout=setTimeOut(()=>{fn.call(this,arguments);timeout=null},wait)
+            }
+        }
+    }
+    
 }
 ```
 
@@ -1552,6 +1581,24 @@ function instance_of(Case,Constructor){
 {
     function instance_of(Case,Constructor){
         if((typeof(Case)!='object'&&typeof(Case)!='function')||Case=='null'){
+            return false
+        }
+        let CaseProto=Object.getPrototypeOf(Case)
+        while(true){
+            if(CaseProto==null){
+                return false
+            }
+            if(CaseProto==Constructor.prototype){
+                return true
+            }
+            CaseProto=Object.getPrototypeOf(CaseProto)
+        }
+    }
+}
+
+{
+    function instance_of(Case,Constructor){
+        if((typeof (Case)!='object'&&typeof (Case)!='function')||Case=='null'){
             return false
         }
         let CaseProto=Object.getPrototypeOf(Case)
