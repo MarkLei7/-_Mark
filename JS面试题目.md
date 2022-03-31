@@ -909,7 +909,19 @@ function debounce(func,wait=1000,immediate=true){
 }
 
 {
-    
+    function debounce(fn,delay){
+        let timer=null
+        return function(){
+            const context=this
+            const args=arguments
+            if(timer){
+                clearTimeOut(timer)
+            }
+            timer=setTimeOur(function(){
+                fn.apply(context,args)
+            },delay)
+        }
+    }
 }
 
 ```
