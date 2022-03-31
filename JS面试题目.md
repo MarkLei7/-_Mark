@@ -909,66 +909,7 @@ function debounce(func,wait=1000,immediate=true){
 }
 
 {
-    function debounce(fn,wait=500,immediate=true){
-        let timeout,result
-        //监测输入的类型
-         if (typeof fn !== 'function'){throw new TypeError('Expected a function')}
-         const debounced=funtion(){
-                const context=this
-                const args=arguments
-                if(timeout){
-                    clearTimeout(timeout)
-                }
-                //是否立即执行
-                if(immediatee){
-                    const callNow=!timeout
-                    timeout = setTimeout(function(){timeout=null},wait)
-                    if(callNow) result=func.apply(context,args)
-
-                }else{
-                    timeout=setTimeout(function(){result=fn.apply(context,args)},wait)
-                }
-                return result
-         }
-         //取消防抖
-        debounced.cancel=funtion(){
-            clearTimeout(timeout)
-            timeout=null
-        }
-         return debounced
-    }
-}
-{
-    function debounce(fn,wait=500,immediate=true){
-        let timeout,result
-        if(typeof(fn)!=='function'){
-            throw new TypeError('Expected a function')
-        }
-        const debounced=function(){
-            const context=this
-            const args=arguments
-            if(timeout){
-                clearTimeout(timeout)
-            }
-            if(immediate){
-                    const CallNow=!timeout
-                    timeout=setTimeOut(function(){timeout=null},wait)
-                    if(CallNow){
-                        result=fn.apply(context,args)
-                    }
-
-            }else{
-                 timeout=setTimeOut(function(){result=fn.apply(context,args)},wait)
-            }
-           
-            return result
-        }
-        debounced.cancel=function(){
-            clearTimeout(timeout)
-            timeout=null
-        }
-        return debounced
-    }
+    
 }
 
 ```
