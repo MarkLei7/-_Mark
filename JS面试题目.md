@@ -923,7 +923,6 @@ function debounce(func,wait=1000,immediate=true){
         }
     }
 }
-
 ```
 
 ##### 实现节流函数throttle
@@ -955,76 +954,38 @@ function throttle(func,wait,options={}){
    
 }
 {
-    function throttle(fn,wait=500,options={}){
-            let timeout
-            let previous=0
-            return function(){
-                let now= +new Date()
-                let remain=wait-(now-previous)
-                if(remain<0){
-                    if(previous==0&&!option.begin){
-                        previous=now
-                        return
-                    }
-                    if(timeout){
-                        clearTimeout(timeout)
-                        timeout=null
-                    }
-                    previous=now
-                    fn.call(this,arguments)
-                }else if(!timeout&&options.end){
-                    timeout=setTimeout(()=>{fn.call(this,arguments);timeout=null},wait)
-                }
+    function throttle(fn,delay){
+        let timer=null
+        let previous=Date.now()
+        return function(){
+            let now=Date.now()
+            let remain=delay-(now-previous)
+            const context=this
+            const args=arguments
+            clearTimeout(timer)
+            if(remain<=0){
+                fn.apply(context,args)
+                previous=Date.now()
+            }else{
+                timer=setTimeout(fn,remain)
             }
+        }
     }
 }
 {
-    //节流 在一定时间内只触发一次，设置options首尾禁用参数
-    function throttle(fn,wait=500,option={}){
-        let timeout
-        let previous=0
+    function throttle(fn,delay){
+        let timer=null
         return function(){
-            let now=+new Date()
-            let remain=wait-(now-previous)
-            if(remain<0){
-                previous=now
-                if(previous==0&&!option.begin){
-                    return
-                }
-                if(timeout){
-                    clearTimeout(timeout)
-                    timeout=null
-                }
-               
-                fn.call(this,arguments)
-
-            }else if(!timeout&&option.end){
-                timeout=setTimeout(()=>{fn.call(this,arguments);timeout=null},wait)
+            const context=this
+            const args=arguments
+            if(!timer){
+                timer=setTimeout(()=>{
+                    fn.apply(context,args)
+                    timer=null
+                },delay)
             }
         }
     }
-    function throttle(fn,wait=500,options={}){
-        let timeout
-        let previous=0
-        return function(){
-            let now=+new Date()
-            let remain=wait-(now-previous)
-            if(remain<0){
-                previous=now
-                if(previous==0&&!option.begin){
-                    return
-                }
-                if(timeout){
-                    clearTimeOut(timeout)
-                    timeout=null
-                }
-                fn.call(this,arguments)
-            }else if(!timeout&&options.end){
-                timeout=setTimeOut(()=>{fn.call(this,arguments);timeout=null},wait)
-            }
-        }
-    }
-    
 }
 ```
 
