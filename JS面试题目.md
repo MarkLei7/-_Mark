@@ -1752,6 +1752,7 @@ Event.prototype.once=function(type,fn){
 }
 
 {
+    //发布订阅模式
     class EventEmitter {
     constructor() {
         this.cache = {}
@@ -1809,3 +1810,15 @@ const A={
 fn(A,["a","b","c"])
 
 ```
+
+##### 模拟实现 new
+```js
+function createObject(Con){
+    const obj={}
+    Object.setPrototypeOf(obj,Con.prototype)
+    const ret=Con.apply(obj,[].slice.call(arguments,1))
+    return typeof(ret)==='object'?ret:obj
+
+}
+```
+
