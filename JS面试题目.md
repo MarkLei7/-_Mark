@@ -1106,18 +1106,23 @@ JavaScript 垃圾回收机制的原理说白了也就是
 
 ##### 继承的多种方式和优缺点
 原型链继承
+
     引用类型的属性被所有实例共享
     在创建 Child 的实例时，不能向Parent传参
+
 借用构造函数(经典继承)
 ```js
 function Child(){
     Parent.call(this,name)
 }
 ```    
+
     避免了引用类型的属性被所有实例共享
     可以在 Child 中向 Parent 传参
     但是方法都在构造函数中定义，每次创建实例都会创建一遍方法
+
 组合继承
+
     原型链继承和经典继承双剑合璧
     融合原型链继承和构造函数的优点，是 JavaScript 中最常用的继承模式
     组合继承最大的缺点是会调用两次父构造函数
@@ -1125,6 +1130,7 @@ function Child(){
     Child.prototype = new Parent();
     一次在创建子类型实例的时候
     var child1 = new Child('kevin', '18');
+
 原型式继承
 ```js
 function createObj(o) {
@@ -1134,11 +1140,12 @@ function createObj(o) {
 }
 ```
 寄生式继承
+
     创建一个仅用于封装继承过程的函数，
     该函数在内部以某种形式来做增强对象，最后返回对象
 ```js
 function createObj (o) {
-    var clone = object.create(o);
+    const clone = object.create(o);
     clone.sayName = function () {
         console.log('hi');
     }
@@ -1146,7 +1153,9 @@ function createObj (o) {
 }
 ```
     缺点：跟借用构造函数模式一样，每次创建对象都会创建一遍方法
+
 寄生组合式继承 
+
     只调用了一次 Parent 构造函数
     并且因此避免了在 Parent.prototype 上面创建不必要的、多余的属性
     与此同时，原型链还能保持不变
