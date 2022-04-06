@@ -316,3 +316,13 @@ function add(){
     return adder
 }
 ```
+
+leetcode
+552 
+127
+621
+1047
+1200
+392
+1267
+60
