@@ -98,7 +98,7 @@ function doPromiseAll(promises){
         if(!Array.isArray(promises)){
             throw new TypeError("promises must be an array")
         }
-        cosnt result=[]
+        const result=[]
         let count=0
         promises.forEach((promise,index)=>{
             Promise.resolve(promise).then((res)=>{
