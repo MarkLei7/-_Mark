@@ -4,9 +4,19 @@ https://juejin.cn/post/6844903512845860872
 
 https://github.com/sisterAn/JavaScript-Algorithms/issues/81
 
+bind
+
 https://juejin.cn/post/6844903779700047885
 
+回流与重绘
+
 https://juejin.cn/post/6844903709772611592
+
+CSS的优先级
+
+https://juejin.cn/post/7016593221815910408
+
+八股文汇总
 
 手写深拷贝
 ```js
@@ -39,7 +49,7 @@ fucntion deepClone(obj={},map=new WeakMap()){
 
 Function.prototype.myCall=function(context){
     if(typeof this!=='function'){
-        throw new Error("Typer Error")
+        throw new Error("Type Error")
     }
     let args=[...arguments].slice(1)
     let result=null
@@ -81,6 +91,7 @@ Function.prototype.myBind=function(context){
         )
     }
 }
+
 ```
 new的实现
 ```js
@@ -90,6 +101,13 @@ function myNew(context){
     const res=context.apply(obj,[...arguments].slice(1))
     return typeof res==='object'?res:obj
 }
+function myNew(context){
+    const obj={}
+    obj._proto_=context.prototype
+    const res=context.apply(obj,[...arguments].slice(1))
+    return typeof res==='obejct'?res:obj
+}
+
 ```
 实现一个 Promise.all
 ```js
@@ -104,13 +122,15 @@ function doPromiseAll(promises){
             Promise.resolve(promise).then((res)=>{
                 result[index]=res
                 count++
-                count===promise.length&&resolve(result)
+                count===promises.length&&resolve(result)
             },(err)=>{
                 reject(err)
             })
         })
     })
 }
+
+
 ```
 发布订阅模式的典型应用，实现一个 EventMitter 类
 ```js
@@ -316,13 +336,3 @@ function add(){
     return adder
 }
 ```
-
-leetcode
-552 
-127
-621
-1047
-1200
-392
-1267
-60
