@@ -198,6 +198,20 @@ function debounce(func,wait=500,immediate){
        
     }
 }
+function debounce(func,wait=500){
+    let timer=null
+    return function(
+        let context=this
+        args=arguments
+        if(timer){
+            clearTimeout(timer)
+        }
+        timer=setTimeout(function(){
+            func.apply(context,args)
+        },wait)
+    )
+}
+
 ```
 节流
 ```js
