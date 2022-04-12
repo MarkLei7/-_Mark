@@ -42,6 +42,7 @@ fucntion deepClone(obj={},map=new WeakMap()){
     return result
 
 }
+
 ```
 
 实现call、apply、bind
@@ -78,15 +79,12 @@ Function.prototype.myApply=function(context){
     return result
 }
 
-Function.prototype.myBind=function(context){
-    if(typeof this!=='function'){
-        throw new Error("Typer Error")
-    }
+Function.prototype.mybind=function(context){
     const args=[...arguments].slice(1)
     const fn=this
     return function Fn(){
         return fn.apply(
-            this instanceof Fn?this:context,
+            this instance of Fn?this:context,
             args.concat(...arguments)
         )
     }
@@ -102,10 +100,10 @@ function myNew(context){
     return typeof res==='object'?res:obj
 }
 function myNew(context){
-    const obj={}
+    const obj= {}
     obj._proto_=context.prototype
     const res=context.apply(obj,[...arguments].slice(1))
-    return typeof res==='obejct'?res:obj
+    return typeof res==='object'?res:obj
 }
 
 ```
@@ -129,7 +127,6 @@ function doPromiseAll(promises){
         })
     })
 }
-
 
 ```
 发布订阅模式的典型应用，实现一个 EventMitter 类
@@ -200,41 +197,39 @@ function debounce(func,wait=500,immediate){
 }
 function debounce(func,wait=500){
     let timer=null
-    return function(
-        let context=this
-        args=arguments
+    return function(){
+        const context=this,args=arguments
         if(timer){
             clearTimeout(timer)
         }
         timer=setTimeout(function(){
             func.apply(context,args)
         },wait)
-    )
+    }
 }
 
 ```
 节流
 ```js
-function throttle(func,wait){
-    let preTime=0
-    return function(){
-        let nowTime=+new Date()
-        let context=this
-        let args=arguments
-        if(nowTime-preTime>wait){
+
+function throttle(func,wait=500){
+    let pre=0
+    return funciton(){
+        let now=+new Date()
+        const context=this,args=arguments
+        if(now-pre>wait){
             func.apply(context,args)
-            preTime=nowTime
+            pre=now
         }
     }
 }
 function throttle(func,wait){
-    let timeout
+    let timer=null
     return function(){
-        let context=this
-        let args=arguments
-        if(!timeout){
-            timeout=setTimeout(function(){
-                timeout=null
+        const context=this,args=arguments
+        if(!timer){
+            timer=setTimeout(function(){
+                timer=null
                 func.apply(context,args)
             },wait)
         }
@@ -296,13 +291,14 @@ function flat(arr,depth=1){
     }
     return arr.slice()
 }
+
 ```
 手写 reduce
 ```js
 Array.prototype.reduce=function(cb,initialValue){
     const arr=this
     let total=intitalValue||arr[0]
-    for(let i=intitialValue?0:1;i<arr.length;i++){
+    for(let i= intitialValue?0:1;i<arr.length;i++){
         total=cb(total,arr[i],i,arr)
     }
     return total
