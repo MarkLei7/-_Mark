@@ -94,16 +94,10 @@ Function.prototype.mybind=function(context){
 new的实现
 ```js
 function myNew(context){
-    const obj=new Object()
+    const obj={}
     obj._proto_=context.prototype
     const res=context.apply(obj,[...arguments].slice(1))
-    return typeof res==='object'?res:obj
-}
-function myNew(context){
-    const obj= {}
-    obj._proto_=context.prototype
-    const res=context.apply(obj,[...arguments].slice(1))
-    return typeof res==='object'?res:obj
+    return typeof res ==='object'?res:obj
 }
 
 ```
