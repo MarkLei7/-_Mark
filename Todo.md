@@ -291,8 +291,8 @@ function flat(arr,depth=1){
 ```js
 Array.prototype.reduce=function(cb,initialValue){
     const arr=this
-    let total=intitalValue||arr[0]
-    for(let i= intitialValue?0:1;i<arr.length;i++){
+    let total=initialValue||arr[0]
+    for(let i= initialValue?0:1;i<arr.length;i++){
         total=cb(total,arr[i],i,arr)
     }
     return total
