@@ -329,13 +329,13 @@ function add(){
 }
 add(1,2)(3).toString()
 function add(){
-    const _args=[...arguments]
+    const args=[...arguments]
     const adder=function(){
-        _args.push(...arguments)
+        args.push(...arguments)
         return adder
     }
-    adder.toString=function (){
-        return _args.reduce(fucntion(a,b){return a+b})
+    adder.toString=function(){
+        return args.reduce((a,b)=>a+b)
     }
     return adder
 }
