@@ -340,3 +340,34 @@ function add(){
     return adder
 }
 ```
+
+```js
+//输入字符串
+//返回可能的排列组合
+const test_fn=(s='')=>{
+        const list=['abc','def','ghi','jkl','mno','pqrs','tuv','wzyz'].map(item=> item.split(""))
+        const numString=s.split("")
+        const temp=[]
+        let ans=[]
+        for(let i=0;i<numString.length;i++){
+            const numIndex=Number(numString[i])-2
+            temp[i]=list[numIndex]
+        }
+        console.log(temp)
+        ans.push(...temp[0])
+        for(let i=1;i<temp.length;i++){
+            const line=[]
+            for(const a of ans){
+                for(const c of temp[i]){
+                    line.push(a+c)
+                }
+            }
+            ans=[...line]
+        }
+        return ans
+
+}
+
+test_fn("23")
+
+```
