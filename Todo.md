@@ -103,7 +103,7 @@ function myNew(context){
 ```
 实现一个 Promise.all
 ```js
-function doPromiseAll(promises){
+function doPromiseAll(promises,resolve,reject){
     return new Promise((resolve,reject)=>{
         if(!Array.isArray(promises)){
             throw new TypeError("promises must be an array")
