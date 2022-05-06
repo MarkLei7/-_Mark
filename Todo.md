@@ -371,3 +371,63 @@ const test_fn=(s='')=>{
 test_fn("23")
 
 ```
+
+【求满足条件的最长子串的长度】
+给定一个字符串，只包含字母和数字，按要求找出字符串中最长（连续）子串的长度，字符字串本身是其最长子串，子串满足：
+1. 只包含 n 个字母（a~z,A~Z），其余必须是数字；
+2. 字母可以在子串的任意位置
+如果找不到满足要求的子串，则返回 -1.
+
+示例1
+子串：abc124acb 
+n=1
+输出：4
+
+示例2
+子串：abc124a2cb 
+n=1
+输出：5
+
+示例3
+子串：abc124a2cb 
+n=2
+输出：6
+
+```js
+//滑动窗口
+
+function maxChild(s='',n=1){
+        let ans=-1
+        let left=0,right=0
+        const lengthS=s.length
+         //记录出现字母的个数
+        let count=0 
+        while(right<lengthS){
+        //当前右指针是数字
+            if(isNumber(s[right])){
+                //右边直接增加
+            }else{
+                //是字母,次数加一
+                  count++
+                   if(count>n){
+                       //次数超过最大值，得甩出左边的字母
+                      while(isNumber(s[left])&&left<right){
+                          left++
+                      }
+                      left++
+                      count--
+                    }    
+            }
+            ans=Math.max(ans,right-left+1)
+                 right++   
+              
+        }
+        return ans
+}
+//判断是否是字母
+const isNumber=(a)=>{
+    const num=Number(a)
+    return num>=0&&num<=9
+}
+maxChild('abc124a2cb',3)
+```
